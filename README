@@ -1,0 +1,143 @@
+PROJECT NAME: The Beauty Edit. 
+
+PROJECT DESCRIPTION: The Beauty Edit is a beauty discovery and wishlist application designed for beauty lovers who enjoy exploring skincare, makeup and beauty products. The app allows users to search beauty products using an external API, view product information and save their favorite products to a personalized wishlist. Users can organize their saved products, add personal notes, update their purchase status and remove products they no longer want. The goal is to create a simple and visually appealing platform that helps users keep track of beauty products they are interested in purchasing.
+
+API: https://dummyjson.com/docs/products
+
+DATA: {id,productName,brand,category, price, priority, status, notes, dateAdded}
+
+USER STORY #1: As a beauty shopper, I want to save products to my wishlist so that I can keep track of items I am interested in buying.
+
+USER STORY #2: As a beauty enthusiast, I want to browse beauty products so that I can discover products I might want to purchase.
+
+USER STORY #3: As a user, I want to edit my saved products so that I can update my notes, purchase status and priority.
+
+COMPONENT TREE
+
+THE BEAUTY EDIT
+│
+├── App.jsx
+│   │
+│   ├── Header
+│   ├── HeroSection
+│   │
+│   ├── BrowseSection
+│   │   ├── SearchBar
+│   │   ├── CategoryFilter
+│   │   ├── ProductList
+│   │   │   └── ProductCard
+│   │
+│   ├── WishlistSection
+│   │   ├── WishlistStats
+│   │   ├── WishlistList
+│   │   │   └── WishlistCard
+│   │   ├── AddProductForm
+│   │   └── EditProductForm
+│   │
+│   └── Footer
+│
+└── main.jsx
+
+
+STATE
+The application will use React's `useState` and `useEffect` hooks to manage data, user interactions, API requests, and local storage.
+
+### State Tree
+
+```text
+THE BEAUTY EDIT
+│
+└── App.jsx
+    │
+    ├── products
+    │   └── Stores products fetched from the DummyJSON API
+    │
+    ├── wishlist
+    │   └── Stores products saved by the user
+    │       └── Persisted in localStorage
+    │
+    ├── loading
+    │   └── Tracks whether the API is loading
+    │
+    ├── error
+    │   └── Stores API error messages
+    │
+    ├── searchTerm
+    │   └── Stores the user's product search input
+    │
+    ├── selectedCategory
+    │   └── Stores the currently selected product category
+    │
+    ├── editingId
+    │   └── Tracks which wishlist product is being edited
+    │
+    └── formData
+        └── Stores the values entered into the add/edit product form
+```
+
+### Where Each State Lives
+
+| State | Location | Purpose |
+|---|---|---|
+| `products` | App.jsx | Stores products fetched from the API |
+| `wishlist` | App.jsx | Stores the user's saved products |
+| `loading` | App.jsx | Tracks API loading status |
+| `error` | App.jsx | Handles API errors |
+| `searchTerm` | App.jsx | Stores the search input |
+| `selectedCategory` | App.jsx | Stores the selected category filter |
+| `editingId` | App.jsx | Identifies the product being edited |
+| `formData` | AddProductForm / EditProductForm | Stores form input values |
+
+### State Persistence
+
+The wishlist will be saved in the browser's `localStorage` so that user-created data remains available after refreshing or reopening the application.
+
+- `useState` will manage the wishlist and other application states.
+- `useEffect` will fetch products from the API when the application loads.
+- Another `useEffect` will update `localStorage` whenever the wishlist changes.
+
+### State Sharing Through Props
+
+The main application state will live in `App.jsx` and be passed down to child components through props.
+
+For example:
+- `products` will be passed to `BrowseSection` and `ProductList`.
+- `wishlist` will be passed to `WishlistSection` and `WishlistList`.
+- Functions for adding, editing, and deleting wishlist items will be passed to the relevant child components.
+- Search and category values will be passed to the browsing components.
+
+SEARCH/FILTER FEATURE:
+Search bar
+
+Users can search for beauty products by:
+- Product name
+- Brand
+Category filter
+
+Users can filter products by:
+- All
+- Beauty
+- Skin care
+- Fragrances what users can search or filter by
+
+BUSINESS LOGIC: Total wishlist items, Total wishlist value,Purchased versus unpurchased items 
+
+MVP vs STRETCH: 
+- Fetch beauty products from DummyJSON API
+- Display products using reusable cards
+- Show loading and error messages
+- Implement search and category filters
+- Add products to a personal wishlist
+- Edit saved wishlist items
+- Delete saved wishlist items
+- Save and load wishlist using localStorage
+- Display wishlist statistics
+- Create a responsive layout
+
+STRETCH GOALS
+- Add a favorite/heart button.
+- Sort wishlist products by price.
+- Add a beauty product detail modal.
+- Add a dark/light theme.
+- Add a purchased products section.
+- Add subtle animations and hover effects.
