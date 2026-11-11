@@ -2,19 +2,26 @@ import SearchBar from './searchbar'
 import CategoryFilter from './categoryfilter'
 import ProductList from './productlist'
 
-function BrowserSection({ products, loading, error }) {
+function BrowserSection({ products, loading, error, addToWishlist, searchTerm, setSearchTerm }) {
   if (loading) {
     return <p>Loading products...</p>;
   }
   if (error) {
     return <p>Error loading products: {error.message}</p>;
   }
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <section>
       <h2>Discover Your Beauty</h2>
-      <SearchBar />
+      <SearchBar 
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <CategoryFilter/>
-      <ProductList products={products} />
+      <ProductList products={filteredProducts} addToWishlist={addToWishlist} />
 
     </section>
   );
