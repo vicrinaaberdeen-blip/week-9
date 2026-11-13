@@ -7,6 +7,8 @@ import Footer from './Components/footer';
 import './App.css';
 import AddProductForm from './Components/addproductform';
 import CustomProductList from './Components/customproductlist';
+import EditProductForm from './Components/editproductform';
+
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -23,6 +25,9 @@ function App() {
 
   return savedProducts ? JSON.parse(savedProducts) : [];
 });
+
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
 
 useEffect(() => {
@@ -121,6 +126,14 @@ useEffect(() => {
   );
 };
 
+const updateCustomProduct = (updatedProduct) => {
+  setCustomProducts((previousProducts) =>
+    previousProducts.map((product) =>
+      product.id === updatedProduct.id ? updatedProduct : product
+    )
+  );
+};
+
   return (
     <>
       <Header />
@@ -132,6 +145,8 @@ useEffect(() => {
         addToWishlist={addToWishlist}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
       />
 
       <WishlistSection
@@ -146,7 +161,15 @@ useEffect(() => {
         customProducts={customProducts}
         addToWishlist={addToWishlist}
         deleteCustomProduct={deleteCustomProduct}
+        setEditingProduct={setEditingProduct}
       />
+      {editingProduct && (
+        <EditProductForm
+          product={editingProduct}
+          updateCustomProduct={updateCustomProduct}
+          cancelEdit={() => setEditingProduct(null)}
+        />
+      )}
 
       <Footer />
     </>

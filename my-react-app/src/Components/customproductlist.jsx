@@ -1,4 +1,4 @@
-function CustomProductList({ customProducts, deleteCustomProduct }) {
+function CustomProductList({ customProducts, deleteCustomProduct, setEditingProduct }) {
   return (
     <section className="custom-product-list">
       <h2>My Beauty Collection</h2>
@@ -14,6 +14,9 @@ function CustomProductList({ customProducts, deleteCustomProduct }) {
               <p>Brand: {product.brand}</p>
               <p>Category: {product.category}</p>
               <p>Price: ${Number(product.price).toFixed(2)}</p>
+              <button onClick={() => setEditingProduct(product)}>
+                Edit
+              </button>
 
               <button onClick={() => deleteCustomProduct(product.id)}>
                 Delete

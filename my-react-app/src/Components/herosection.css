@@ -1,44 +1,50 @@
+
 /* HERO SECTION */
 
-.hero {
+.hero-section {
   position: relative;
-  min-height: 520px;
+  min-height: 540px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 70px 8%;
+  align-items: center;
+  padding: 65px 8%;
+  overflow: hidden;
 
+  background-color: #f2f0ed;
   background-image:
     linear-gradient(
       90deg,
-      rgba(241, 241, 240, 0.98) 0%,
-      rgba(241, 241, 240, 0.8) 40%,
-      rgba(241, 241, 240, 0.05) 100%
+      rgba(242, 240, 237, 1) 0%,
+      rgba(242, 240, 237, 0.95) 35%,
+      rgba(242, 240, 237, 0.15) 75%
     ),
-    url("/images/beauty-hero.jpg");
+    url("https://images.unsplash.com/photo-1784979195569-a60f090149cb?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D");
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+}
+
 /* HERO HEADING */
 
-.hero h1 {
-  max-width: 550px;
+.hero-content h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(38px, 5vw, 65px);
+  font-size: clamp(42px, 5vw, 68px);
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.05;
   color: #242321;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 /* HERO DESCRIPTION */
 
-.hero p {
-  max-width: 400px;
+.hero-content p {
+  max-width: 380px;
   font-size: 14px;
   line-height: 1.8;
   color: #655E58;
@@ -47,10 +53,11 @@
 
 /* HERO BUTTON */
 
-.hero button {
+.hero-button {
+  display: inline-block;
   background-color: #242321;
-  color: #FFFFFF;
-  border: none;
+  color: #ffffff;
+  text-decoration: none;
   border-radius: 30px;
   padding: 14px 30px;
   font-size: 11px;
@@ -59,27 +66,41 @@
   transition: all 0.3s ease;
 }
 
-.hero button:hover {
+.hero-button:hover {
   background-color: #A98768;
   transform: translateY(-3px);
 }
 
-/* MOBILE RESPONSIVENESS */
+/* TABLET */
 
-@media (max-width: 600px) {
-  .hero {
-    min-height: 430px;
-    padding: 45px 7%;
+@media (max-width: 900px) {
+  .hero-section {
+    min-height: 460px;
+    padding: 50px 6%;
     background-position: 60% center;
   }
 
-  .hero h1 {
-    font-size: 38px;
-    max-width: 320px;
+  .hero-content {
+    max-width: 400px;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .hero-section {
+    min-height: 430px;
+    padding: 40px 6%;
+    background-position: 65% center;
   }
 
-  .hero p {
+  .hero-section h1 {
+    font-size: 40px;
+    max-width: 300px;
+  }
+
+  .hero-section p {
     font-size: 12px;
-    max-width: 280px;
+    max-width: 270px;
   }
 }

@@ -1,12 +1,23 @@
-function CategoryFilter() {
+function CategoryFilter({ selectedCategory, setSelectedCategory }) {
+  const categories = ['All', 'Skincare', 'Makeup',];
+
   return (
     <div>
       <h3>Categories</h3>
+
       <ul>
-        <li>All</li>
-        <li>Skincare</li>
-        <li>Makeup</li>
-        <li>Haircare</li>
+        {categories.map((category) => (
+          <li key={category}>
+            <button
+              onClick={() => setSelectedCategory(category)}
+              className={
+                selectedCategory === category ? 'active-category' : ''
+              }
+            >
+              {category}
+            </button>
+          </li>
+        ))}
       </ul>
     </div>
   );

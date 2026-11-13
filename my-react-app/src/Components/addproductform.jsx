@@ -8,6 +8,8 @@ function AddProductForm({ addCustomProduct }) {
     price: ''
   });
 
+  const [error, setError] = useState('');
+
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -18,14 +20,36 @@ function AddProductForm({ addCustomProduct }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    if (!formData.title.trim() || !formData.brand.trim()) {
+      setError('Please enter a product name and brand.');
+      return;
+    }
+
+    if (!formData.category) {
+      setError('Please select a category.');
+      return;
+    }
+
+    if (
+      formData.price === '' ||
+      Number(formData.price) < 0 ||
+      !Number.isFinite(Number(formData.price))
+    ) {
+      setError('Please enter a valid, non-negative price.');
+      return;
+    }
+
     const newProduct = {
       ...formData,
+      title: formData.title.trim(),
+      brand: formData.brand.trim(),
       id: `custom-${Date.now()}`,
       price: Number(formData.price),
       source: 'custom'
     };
 
     addCustomProduct(newProduct);
+    setError('');
 
     setFormData({
       title: '',
@@ -40,6 +64,7 @@ function AddProductForm({ addCustomProduct }) {
       <h2>Add a Product to Your Collection</h2>
 
       <form onSubmit={handleSubmit}>
+        {error && <p className="form-error">{error}</p>}
         <label>
           Product Name
           <input
@@ -73,7 +98,6 @@ function AddProductForm({ addCustomProduct }) {
             <option value="">Choose a category</option>
             <option value="Skincare">Skincare</option>
             <option value="Makeup">Makeup</option>
-            <option value="Haircare">Haircare</option>
             <option value="Fragrance">Fragrance</option>
           </select>
         </label>

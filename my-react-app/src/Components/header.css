@@ -40,13 +40,21 @@
 
 @media (max-width: 600px) {
   .header {
-    padding: 18px 5%;
+    padding: 18px 4%;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .header-logo h1 {
+    font-size: 18px;
   }
 
   .header-nav {
-    gap: 22px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
   }
 
   .header-nav a {

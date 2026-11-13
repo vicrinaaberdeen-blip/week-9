@@ -1,18 +1,21 @@
+
 import ProductCard from './productcard';
 
 function ProductList({ products, addToWishlist }) {
   return (
-    <div className="product-list">
-      <h2>Product List</h2>
+    <section className="product-section">
+      <h2>Bestsellers</h2>
 
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          addToWishlist={addToWishlist}
-        />
-      ))}
-    </div>
+      <div className="product-list">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            addToWishlist={addToWishlist}
+          />
+        ))}
+      </div>
+    </section>
   );
 }
 

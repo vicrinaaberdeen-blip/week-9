@@ -1,8 +1,9 @@
 
 function ProductCard({ product, addToWishlist }) {
   return (
-    <div>
-      <div className="product-image-container image-placeholder">
+    <div className="product-card">
+
+      <div className="product-image-container">
         <img
           src={product.image_link || product.thumbnail}
           alt={product.title}
@@ -13,16 +14,28 @@ function ProductCard({ product, addToWishlist }) {
             event.currentTarget.parentElement.classList.add("image-placeholder");
           }}
         />
-        <span className="placeholder-text">THE BEAUTY EDIT</span>
+
+        <span className="placeholder-text">
+          THE BEAUTY EDIT
+        </span>
       </div>
 
-      <h3>{product.title}</h3>
-      <p>{product.description || "No description available."}</p>
-      <p>${product.price}</p>
+      <div className="product-info">
+        <h3>{product.title}</h3>
 
-      <button onClick={() => addToWishlist(product)}>
-        Add to Wishlist
-      </button>
+        <p className="product-description">
+          {product.description || "No description available."}
+        </p>
+
+        <p className="product-price">
+          {product.price != null ? `$${product.price}` : ""}
+        </p>
+
+        <button onClick={() => addToWishlist(product)}>
+          Add to Wishlist
+        </button>
+      </div>
+
     </div>
   );
 }

@@ -2,7 +2,15 @@ import SearchBar from './searchbar'
 import CategoryFilter from './categoryfilter'
 import ProductList from './productlist'
 
-function BrowserSection({ products, loading, error, addToWishlist, searchTerm, setSearchTerm }) {
+function BrowserSection({ 
+  products, 
+  loading, 
+  error, 
+  addToWishlist, 
+  searchTerm, 
+  setSearchTerm, 
+  selectedCategory, 
+  setSelectedCategory }) {
   if (loading) {
     return <p>Loading products...</p>;
   }
@@ -10,11 +18,20 @@ function BrowserSection({ products, loading, error, addToWishlist, searchTerm, s
     return <p>Error loading products: {error.message}</p>;
   }
 
- const filteredProducts = products.filter((product) =>
-  (product.title || product.name || "")
+ const filteredProducts = products.filter((product) => {
+  const matchesSearch = (product.title || product.name || "")
     .toLowerCase()
-    .includes(searchTerm.toLowerCase())
-  );
+    .includes(searchTerm.toLowerCase()) || (product.brand || "")
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+
+  const matchesCategory = 
+  selectedCategory === 'All' ||
+    (selectedCategory === 'Makeup' && product.source === 'makeup') ||
+    (selectedCategory === 'Skincare' && product.source === 'skincare');
+
+  return matchesSearch && matchesCategory;
+ });
   console.log("Total products:", products.length);
 
 console.log(
@@ -30,7 +47,10 @@ console.log("Filtered products:", filteredProducts.length);
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
-      <CategoryFilter/>
+      <CategoryFilter
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
       <ProductList products={filteredProducts} addToWishlist={addToWishlist} />
 
     </section>
