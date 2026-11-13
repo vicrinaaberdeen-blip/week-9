@@ -2,7 +2,7 @@ import ProductCard from './productcard';
 
 function ProductList({ products, addToWishlist }) {
   return (
-    <div>
+    <div className="product-list">
       <h2>Product List</h2>
 
       {products.map((product) => (

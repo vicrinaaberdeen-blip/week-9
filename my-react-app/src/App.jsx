@@ -4,32 +4,82 @@ import HeroSection from './Components/herosection';
 import BrowserSection from './Components/browsersection';
 import WishlistSection from './Components/wishlistsection';
 import Footer from './Components/footer';
+import './App.css';
+import AddProductForm from './Components/addproductform';
+import CustomProductList from './Components/customproductlist';
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(() => {
+  const savedWishlist = localStorage.getItem('beautyWishlist');
+
+  return savedWishlist ? JSON.parse(savedWishlist) : [];
+});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [customProducts, setCustomProducts] = useState(() => {
+  const savedProducts = localStorage.getItem('beautyCustomProducts');
 
-  useEffect(() => {
-    fetch('https://makeup-api.herokuapp.com/api/v1/products.json')
-      .then((response) => {
+  return savedProducts ? JSON.parse(savedProducts) : [];
+});
+
+
+useEffect(() => {
+  console.log("My API call is being made");
+
+  Promise.all([
+    fetch('https://makeup-api.herokuapp.com/api/v1/products.json'),
+    fetch('https://dummyjson.com/products/category/skin-care')
+  ])
+    .then((responses) => {
+      responses.forEach((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
-        return response.json();
-      })
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching products:', error);
-        setError('Unable to load products');
-        setLoading(false);
       });
-  }, []);
+
+      return Promise.all(
+        responses.map((response) => response.json())
+      );
+    })
+    .then(([makeupData, skincareData]) => {
+      const makeupProducts = makeupData.map((product) => ({
+        ...product,
+        id: `makeup-${product.id}`,
+        title: product.name || product.title || "Unnamed Product",
+        brand: product.brand || "Unknown Brand",
+        source: "makeup",
+      }));
+
+      const skincareProducts = skincareData.products.map((product) => ({
+        ...product,
+        id: `skincare-${product.id}`,
+        source: "skincare",
+      }));
+
+      console.log("Makeup products:", makeupProducts);
+      console.log("Skincare products:", skincareProducts);
+      console.log("Number of skincare products:", skincareProducts.length);
+      console.log("First skincare product:", skincareProducts[0]);
+
+      setProducts([...makeupProducts, ...skincareProducts]);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error('Error fetching products:', error);
+      setError('Unable to load products');
+      setLoading(false);
+    });
+}, []);
+
+useEffect(() => {
+  localStorage.setItem('beautyWishlist', JSON.stringify(wishlist));
+}, [wishlist]);
+
+useEffect(() => {
+  localStorage.setItem('beautyCustomProducts', JSON.stringify(customProducts));
+}, [customProducts]);
 
   const addToWishlist = (product) => {
     setWishlist((previousWishlist) => {
@@ -58,6 +108,19 @@ function App() {
     );
   };
 
+  const addCustomProduct = (newProduct) => {
+  setCustomProducts((previousProducts) => [
+    ...previousProducts,
+    newProduct
+  ]);
+};
+
+  const deleteCustomProduct = (id) => {
+  setCustomProducts((previousProducts) =>
+    previousProducts.filter((product) => product.id !== id)
+  );
+};
+
   return (
     <>
       <Header />
@@ -75,6 +138,14 @@ function App() {
         wishlist={wishlist}
         addToWishlist={addToWishlist}
         removeFromWishlist={removeFromWishlist}
+      />
+      <AddProductForm
+        addCustomProduct={addCustomProduct}
+      />
+      <CustomProductList
+        customProducts={customProducts}
+        addToWishlist={addToWishlist}
+        deleteCustomProduct={deleteCustomProduct}
       />
 
       <Footer />
