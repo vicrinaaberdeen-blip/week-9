@@ -634,9 +634,10 @@ section {
 }
 
 .footer-content h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 700;
+  color: #242321;
   letter-spacing: 3px;
   margin-bottom: 12px;
 }
