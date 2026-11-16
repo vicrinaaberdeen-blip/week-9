@@ -49,19 +49,25 @@ useEffect(() => {
       );
     })
     .then(([makeupData, skincareData]) => {
-      const makeupProducts = makeupData.map((product) => ({
-        ...product,
-        id: `makeup-${product.id}`,
-        title: product.name || product.title || "Unnamed Product",
-        brand: product.brand || "Unknown Brand",
-        source: "makeup",
-      }));
+      
+      const makeupProducts = makeupData
+        .filter((product) => product.image_link)
+        .map((product) => ({
+          ...product,
+          id: `makeup-${product.id}`,
+          title: product.name || product.title || "Unnamed Product",
+          brand: product.brand || "Unknown Brand",
+          source: "makeup",
+        }));
 
-      const skincareProducts = skincareData.products.map((product) => ({
-        ...product,
-        id: `skincare-${product.id}`,
-        source: "skincare",
-      }));
+      const skincareProducts = skincareData.products
+        .filter((product) => product.thumbnail)
+        .map((product) => ({
+          ...product,
+          id: `skincare-${product.id}`,
+          source: "skincare",
+        }));
+
 
       console.log("Makeup products:", makeupProducts);
       console.log("Skincare products:", skincareProducts);
@@ -112,7 +118,15 @@ useEffect(() => {
       previousWishlist.filter((item) => item.id !== id)
     );
   };
-
+  const togglePurchased = (id) => {
+  setWishlist((previousWishlist) =>
+    previousWishlist.map((product) =>     
+      product.id === id
+        ? { ...product, purchased: !product.purchased }
+        : product
+    )
+  );
+};
   const addCustomProduct = (newProduct) => {
   setCustomProducts((previousProducts) => [
     ...previousProducts,
@@ -153,7 +167,9 @@ const updateCustomProduct = (updatedProduct) => {
         wishlist={wishlist}
         addToWishlist={addToWishlist}
         removeFromWishlist={removeFromWishlist}
+        togglePurchased={togglePurchased}
       />
+      
       <AddProductForm
         addCustomProduct={addCustomProduct}
       />

@@ -1,7 +1,7 @@
 
 import WishlistCard from './wishlistcard';
 
-function WishlistSection({ wishlist, removeFromWishlist }) {
+function WishlistSection({ wishlist, removeFromWishlist, togglePurchased }) {
   return (
     <section id="wishlist" className="wishlist-section">
 
@@ -22,6 +22,7 @@ function WishlistSection({ wishlist, removeFromWishlist }) {
               key={product.id}
               product={product}
               removeFromWishlist={removeFromWishlist}
+              togglePurchased={togglePurchased}
             />
           ))}
         </div>

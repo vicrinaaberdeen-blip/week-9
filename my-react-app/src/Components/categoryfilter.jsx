@@ -2,10 +2,10 @@ function CategoryFilter({ selectedCategory, setSelectedCategory }) {
   const categories = ['All', 'Skincare', 'Makeup',];
 
   return (
-    <div>
+    <div className= "category-filter">
       <h3>Categories</h3>
 
-      <ul>
+      <ul className="category-list">
         {categories.map((category) => (
           <li key={category}>
             <button

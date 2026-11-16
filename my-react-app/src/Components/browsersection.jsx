@@ -15,7 +15,7 @@ function BrowserSection({
     return <p>Loading products...</p>;
   }
   if (error) {
-    return <p>Error loading products: {error.message}</p>;
+    return <p>Error loading products: {error}</p>;
   }
 
  const filteredProducts = products.filter((product) => {

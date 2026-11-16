@@ -1,5 +1,5 @@
 
-function WishlistCard({ product, removeFromWishlist }) {
+function WishlistCard({ product, removeFromWishlist, togglePurchased }) {
   return (
     <div className="wishlist-card">
 
@@ -30,6 +30,14 @@ function WishlistCard({ product, removeFromWishlist }) {
         <p className="wishlist-priority">
           Priority: {product.priority}
         </p>
+
+        <p className="wishlist-status">
+          Status: {product.purchased ? "Purchased" : "Not Purchased"}
+        </p>
+
+        <button onClick={() => togglePurchased(product.id)}>
+          {product.purchased ? "Mark as Not Purchased" : "Mark as Purchased"}
+        </button>
 
         <button onClick={() => removeFromWishlist(product.id)}>
           Remove from Wishlist
