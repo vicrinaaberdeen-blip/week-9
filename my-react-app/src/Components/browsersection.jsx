@@ -7,6 +7,8 @@ function BrowserSection({
   loading, 
   error, 
   addToWishlist, 
+  removeFromWishlist,
+  wishlist,
   searchTerm, 
   setSearchTerm, 
   selectedCategory, 
@@ -51,7 +53,12 @@ console.log("Filtered products:", filteredProducts.length);
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-      <ProductList products={filteredProducts} addToWishlist={addToWishlist} />
+      <ProductList 
+        products={filteredProducts} 
+        addToWishlist={addToWishlist} 
+        removeFromWishlist={removeFromWishlist} 
+        wishlist={wishlist}
+        />
 
     </section>
   );

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import ProductCard from './productcard';
 
-function ProductList({ products, addToWishlist }) {
+function ProductList({ products, addToWishlist, removeFromWishlist, wishlist }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [failedImages, setFailedImages] = useState([]);
 
@@ -55,6 +55,8 @@ function ProductList({ products, addToWishlist }) {
             key={product.id}
             product={product}
             addToWishlist={addToWishlist}
+            removeFromWishlist={removeFromWishlist}
+            isInWishlist={wishlist.some((item)=>item.id===product.id)}
             onImageError={handleImageError}
           />
         ))}

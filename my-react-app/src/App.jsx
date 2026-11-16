@@ -15,8 +15,18 @@ function App() {
   const [wishlist, setWishlist] = useState(() => {
   const savedWishlist = localStorage.getItem('beautyWishlist');
 
-  return savedWishlist ? JSON.parse(savedWishlist) : [];
+  if (!savedWishlist) {
+    return [];
+  }
+
+  try {
+    const parsedWishlist = JSON.parse(savedWishlist);
+    return Array.isArray(parsedWishlist) ? parsedWishlist : [];
+  } catch {
+    return [];
+  }
 });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -157,6 +167,8 @@ const updateCustomProduct = (updatedProduct) => {
         loading={loading}
         error={error}
         addToWishlist={addToWishlist}
+        removeFromWishlist={removeFromWishlist}
+        wishlist={wishlist}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         selectedCategory={selectedCategory}

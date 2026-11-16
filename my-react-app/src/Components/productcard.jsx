@@ -1,4 +1,11 @@
-function ProductCard({ product, addToWishlist, onImageError }) {
+
+function ProductCard({
+  product,
+  addToWishlist,
+  removeFromWishlist,
+  isInWishlist,
+  onImageError
+}) {
   return (
     <div className="product-card">
       <div className="product-image-container">
@@ -8,6 +15,21 @@ function ProductCard({ product, addToWishlist, onImageError }) {
           loading="lazy"
           onError={() => onImageError(product.id)}
         />
+
+        <button
+          className={`wishlist-heart ${isInWishlist ? "heart-active" : ""}`}
+          onClick={() =>
+            isInWishlist
+              ? removeFromWishlist(product.id)
+              : addToWishlist(product)
+          }
+          aria-label={
+            isInWishlist ? "Remove from wishlist" : "Add to wishlist"
+          }
+          aria-pressed={isInWishlist}
+        >
+          {isInWishlist ? "♥" : "♡"}
+        </button>
       </div>
 
       <div className="product-info">
@@ -16,14 +38,9 @@ function ProductCard({ product, addToWishlist, onImageError }) {
         <p className="product-price">
           {product.price != null ? `$${product.price}` : ""}
         </p>
-
-        <button onClick={() => addToWishlist(product)}>
-          Add to Wishlist
-        </button>
       </div>
     </div>
   );
 }
 
 export default ProductCard;
-
