@@ -4,7 +4,7 @@
 
 **The Beauty Edit** is a beauty discovery and wishlist application designed for beauty lovers who enjoy exploring makeup and skincare products.
 
-Users can browse products from external APIs, search by product name or brand, and filter products by category. They can save their favourite products to a personal wishlist, track whether they have purchased them, and remove items they no longer want.
+Users can browse products from external APIs, search by product name or brand, and filter products by category. They can save their favorite products to a personal wishlist, track whether they have purchased them, and remove items they no longer want.
 
 The application also allows users to create their own beauty products in a separate personal collection. These custom products can be added, edited, and deleted. Wishlist items and custom products are saved using the browser's `localStorage`, so user data remains available after refreshing the page.
 
